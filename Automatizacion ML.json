@@ -1,0 +1,2711 @@
+{
+  "name": "Automatizacion ML",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ \"https://api.mercadolibre.com\" + $(\"ML - CENTRAL\").item.json.body.resource }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        688,
+        32
+      ],
+      "id": "7e18d8de-d621-4575-935b-0bdf780affcf",
+      "name": "HTTP Request",
+      "credentials": {
+        "oAuth2Api": {
+          "id": "RGGOytt72lCMBR0x",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7967cd2e-526c-49f3-8710-e404d5566604",
+              "name": "nombre_producto",
+              "value": "={{$json.order_items[0].item.title}}",
+              "type": "string"
+            },
+            {
+              "id": "68639989-f429-42a8-a690-1c8866428aa7",
+              "name": "item_id",
+              "value": "={{$json.order_items[0].item.id}}",
+              "type": "string"
+            },
+            {
+              "id": "ede03cc0-ee11-46c9-a1a9-fce23cb75d20",
+              "name": "order_id",
+              "value": "={{$json.id}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        32
+      ],
+      "id": "46cda3d1-361b-44a9-86a0-94dcb3c588b3",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8ecf65c0-c902-433a-8389-ce8dcccaa402",
+              "leftValue": "={{$json.id}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1520,
+        32
+      ],
+      "id": "bdde6c35-12d5-444e-b4ad-1b6f39760db2",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "08650b3d-8192-4e63-811d-f1bc8e700ae9",
+              "leftValue": "={{$json.id}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1824,
+        144
+      ],
+      "id": "ad6fcc3f-b081-4237-b5cf-abb55d4a0dd8",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "content": "NOTIFICACION DE LA VENTA  EN TELEGRAM",
+        "height": 80,
+        "width": 438
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        64,
+        176
+      ],
+      "typeVersion": 1,
+      "id": "b5cbb203-bc1d-47f6-ad2d-1f1f7366d5b0",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Sincroniza la venta",
+        "height": 80,
+        "width": 166
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        656,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "ded06d36-9ec5-4ff0-80bc-ebabd3e18179",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "Asignamos nombre y parametros de venta",
+        "height": 80,
+        "width": 166
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        880,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "194dee7e-d7cb-4ad6-ad43-0163c3a43fba",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "Limpiamos el titulo generado por ML",
+        "height": 80,
+        "width": 166
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1088,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "f21932d3-1cf7-4246-84a9-8da9986bec2b",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "Buscamos el nombre del producto en drive",
+        "height": 80,
+        "width": 150
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1296,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "32285b52-f119-4407-9c39-3b921480c760",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "Busca si esta en \"SOLO ML\"",
+        "height": 80,
+        "width": 150
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1296,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "7f19ec6b-2c89-4b0a-a5a1-c3e3db576bf8",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "numberInputs": 5
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3344,
+        528
+      ],
+      "id": "853fee21-992c-4542-86d1-2626cbea979d",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "url": "={{ \"https://api.mercadolibre.com/\" + $json.body.resource.replace(/^\\//, \"\") }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        80,
+        672
+      ],
+      "id": "97daea7a-e2fa-48a3-ae00-788c6b80f573",
+      "name": "HTTP Request1",
+      "credentials": {
+        "oAuth2Api": {
+          "id": "RGGOytt72lCMBR0x",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "281252f5-a097-43b7-9d3d-aeba752377d1",
+              "name": "=nombre_producto",
+              "value": "={{$json.order_items[0].item.title}}",
+              "type": "string"
+            },
+            {
+              "id": "f867a350-c8b3-4aee-bd88-35c61d09803b",
+              "name": "nombre_vendido",
+              "value": "={{$json.order_items[0].item.title}} (VENDIDO)",
+              "type": "string"
+            },
+            {
+              "id": "6e8c210b-49dc-4c28-917e-a432717cc6c2",
+              "name": "order_id",
+              "value": "={{$json.id}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        672
+      ],
+      "id": "c7743dd0-9186-492e-ad9d-248e1c8928d6",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$json.primera_busqueda}}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1gEGyWy4cqykMPtx0CntfCm5BPLTbmUNF",
+            "mode": "list",
+            "cachedResultName": "AA VENDIDO",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1gEGyWy4cqykMPtx0CntfCm5BPLTbmUNF"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        720,
+        672
+      ],
+      "id": "648b5f1c-033e-4dfc-9baa-721dd15d3fc3",
+      "name": "Search in AA VENDIDO",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const nombre = $json.nombre_producto.toLowerCase();\n\nconst basura = [\n  \"original\",\n  \"talle\"\n];\n\nlet limpio = nombre;\n\nfor (const palabra of basura) {\n  const regex = new RegExp(\"\\\\b\" + palabra + \"\\\\b\", \"gi\");\n  limpio = limpio.replace(regex, \"\");\n}\n\n// quitar talles\nlimpio = limpio.replace(/\\b(xs|s|m|l|xl|xxl)\\b/gi, \"\");\n\n// normalizar colores/género\nlimpio = limpio.replace(/\\bnegra\\b/g, \"negro\");\nlimpio = limpio.replace(/\\bblanca\\b/g, \"blanco\");\nlimpio = limpio.replace(/\\broja\\b/g, \"rojo\");\nlimpio = limpio.replace(/\\bazul marino\\b/g, \"azul\");\n\n// limpiar espacios\nlimpio = limpio.replace(/\\s+/g, \" \").trim();\n\n// eliminar palabras repetidas manteniendo orden\nconst palabras = limpio.split(\" \");\nconst unicas = [];\nfor (const p of palabras) {\n  if (!unicas.includes(p)) unicas.push(p);\n}\nlimpio = unicas.join(\" \");\n\nreturn [{\n  json: {\n    ...$json,\n    nombre_busqueda: limpio\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        32
+      ],
+      "id": "dc9f915f-4ad8-4b55-8b46-ce45176f4c22",
+      "name": "LIMPIEZA DE NOMBRE"
+    },
+    {
+      "parameters": {
+        "jsCode": "const original = ($json.nombre_producto || \"\").toLowerCase();\n\nlet texto = original\n  .normalize(\"NFD\")\n  .replace(/[\\u0300-\\u036f]/g, \"\");\n\n// palabras que casi nunca ayudan\nconst basura = [\n  \"original\",\n  \"talle\",\n  \"usado\",\n  \"usada\",\n  \"nuevo\",\n  \"nueva\",\n  \"unidad\",\n  \"unidades\"\n];\n\nfor (const palabra of basura) {\n  texto = texto.replace(new RegExp(\"\\\\b\" + palabra + \"\\\\b\", \"gi\"), \"\");\n}\n\n// quitar talles sueltos\ntexto = texto.replace(/\\b(xs|s|m|l|xl|xxl|xxxl)\\b/gi, \"\");\n\n// normalizar género/color\ntexto = texto.replace(/\\bnegra\\b/g, \"negro\");\ntexto = texto.replace(/\\bblanca\\b/g, \"blanco\");\ntexto = texto.replace(/\\broja\\b/g, \"rojo\");\n\n// quitar años y números largos\ntexto = texto.replace(/\\b(19\\d{2}|20\\d{2})\\b/g, \"\");\ntexto = texto.replace(/\\b\\d{3,}\\b/g, \"\");\n\n// limpiar símbolos\ntexto = texto.replace(/[^\\w\\s]/g, \" \");\ntexto = texto.replace(/\\s+/g, \" \").trim();\n\n// eliminar palabras repetidas manteniendo orden\nlet palabras = texto.split(\" \").filter(Boolean);\nconst unicas = [];\n\nfor (const p of palabras) {\n  if (!unicas.includes(p)) unicas.push(p);\n}\n\npalabras = unicas;\n\n// búsqueda completa limpia\nconst nombre_busqueda = palabras.join(\" \");\n\n// palabras poco confiables para búsqueda corta\nconst secundarios = [\n  \"azul\",\n  \"negro\",\n  \"blanco\",\n  \"gris\",\n  \"rojo\",\n  \"verde\",\n  \"beige\",\n  \"marron\",\n  \"dorado\",\n  \"plateado\"\n];\n\n// búsqueda simple: saca colores y datos variables\nconst simples = palabras.filter(p => !secundarios.includes(p));\nconst nombre_busqueda_simple = simples.join(\" \");\n\n// búsquedas escalonadas desde más específica a más amplia\nconst busquedas = [];\n\nfunction agregar(valor, permitirUnaPalabra = false) {\n  valor = (valor || \"\").replace(/\\s+/g, \" \").trim();\n\n  const cantidadPalabras = valor.split(\" \").filter(Boolean).length;\n\n  if (\n    valor &&\n    (cantidadPalabras >= 2 || permitirUnaPalabra) &&\n    !busquedas.includes(valor)\n  ) {\n    busquedas.push(valor);\n  }\n}\n\nagregar(nombre_busqueda);\nagregar(nombre_busqueda_simple);\n\n// recorte progresivo desde el final, mínimo 2 palabras\nfor (let i = palabras.length; i >= 2; i--) {\n  agregar(palabras.slice(0, i).join(\" \"));\n}\n\n// recorte progresivo de la versión simple, mínimo 2 palabras\nfor (let i = simples.length; i >= 2; i--) {\n  agregar(simples.slice(0, i).join(\" \"));\n}\n\n// último rescate: primera palabra del producto\n// ejemplo: \"aleron\"\nif (palabras[0]) {\n  agregar(palabras[0], true);\n}\n\nreturn [{\n  json: {\n    ...$json,\n    nombre_busqueda,\n    nombre_busqueda_simple,\n    busquedas,\n    primera_busqueda: busquedas[0] || \"\",\n    segunda_busqueda: busquedas[1] || \"\",\n    tercera_busqueda: busquedas[2] || \"\",\n    cuarta_busqueda: busquedas[3] || \"\",\n    quinta_busqueda: busquedas[4] || \"\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        512,
+        672
+      ],
+      "id": "09c6908d-ca14-4ed1-b622-798653c73389",
+      "name": "LIMPIEZA DE NOMBRE1"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$json.nombre_busqueda}}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "17tMhNWMjQz0f-5QrG8LaFcfvMESvhPRk",
+            "mode": "list",
+            "cachedResultName": "SOLO ML",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/17tMhNWMjQz0f-5QrG8LaFcfvMESvhPRk"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1328,
+        32
+      ],
+      "id": "0470cc93-44d8-4c97-b898-f37892bfb05e",
+      "name": "Search in SOLO ML",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "fileId": {
+          "__rl": true,
+          "value": "={{$json.id}}",
+          "mode": "id"
+        },
+        "newUpdatedFileName": "={{ $json.name.includes(\"(VENDIDO)\") ? $json.name : $json.name + \" (VENDIDO)\" }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4576,
+        -16
+      ],
+      "id": "ed465638-8381-4472-b815-c9b7c9579f88",
+      "name": "Agregar (VENDIDO)",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{$json.id}}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1gEGyWy4cqykMPtx0CntfCm5BPLTbmUNF",
+          "mode": "list",
+          "cachedResultName": "AA VENDIDO",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1gEGyWy4cqykMPtx0CntfCm5BPLTbmUNF"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4400,
+        -16
+      ],
+      "id": "4ac078c9-14af-40f4-9f36-9edd5ba2635c",
+      "name": "Mover a AA VENDIDO",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$json.nombre_busqueda}}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1gKTC7GDCGGMi9-lgR2ZwovB5-HVzpZQj",
+            "mode": "list",
+            "cachedResultName": "AMBOS",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1gKTC7GDCGGMi9-lgR2ZwovB5-HVzpZQj"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1696,
+        144
+      ],
+      "id": "26b81d74-8783-499f-ac41-4ae02dd7341e",
+      "name": "Search in AMBOS",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "mimeType = 'application/vnd.google-apps.folder'",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "17tMhNWMjQz0f-5QrG8LaFcfvMESvhPRk",
+            "mode": "list",
+            "cachedResultName": "SOLO ML",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/17tMhNWMjQz0f-5QrG8LaFcfvMESvhPRk"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3104,
+        304
+      ],
+      "id": "8727a179-6a8c-4db3-b599-f916a379570d",
+      "name": "Search in SOLO ML1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "mimeType = 'application/vnd.google-apps.folder'",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1gKTC7GDCGGMi9-lgR2ZwovB5-HVzpZQj",
+            "mode": "list",
+            "cachedResultName": "AMBOS",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1gKTC7GDCGGMi9-lgR2ZwovB5-HVzpZQj"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3104,
+        448
+      ],
+      "id": "67edfb48-fab7-4e8e-a6ea-a431ed3c6aa0",
+      "name": "Search in AMBOS1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "fileId": {
+          "__rl": true,
+          "value": "={{$json.id}}",
+          "mode": "id"
+        },
+        "newUpdatedFileName": "={{$json.name.replace(\" (VENDIDO)\", \"\")}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2592,
+        656
+      ],
+      "id": "f31d3751-b7b7-44d6-bef9-277bb00f83fd",
+      "name": "Sacar (VENDIDO)",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6e129323-3a98-4793-b512-936dc3705beb",
+              "leftValue": "={{ !!$json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        928,
+        672
+      ],
+      "id": "9bf0ad07-03ef-4d01-a198-5dc627bdc9a4",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$node[\"LIMPIEZA DE NOMBRE1\"].json[\"segunda_busqueda\"]}}",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1104,
+        752
+      ],
+      "id": "4f6266fb-7d0c-466c-a564-8acf6eedf661",
+      "name": "Search in AA VENDIDO1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6e129323-3a98-4793-b512-936dc3705beb",
+              "leftValue": "={{ !!$json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1216,
+        752
+      ],
+      "id": "0260593d-3a13-42b6-bedd-845c1b08ea13",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$node[\"LIMPIEZA DE NOMBRE1\"].json[\"segunda_busqueda\"]}}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1gEGyWy4cqykMPtx0CntfCm5BPLTbmUNF",
+            "mode": "list",
+            "cachedResultName": "AA VENDIDO",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1gEGyWy4cqykMPtx0CntfCm5BPLTbmUNF"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1392,
+        832
+      ],
+      "id": "dff16f05-0024-467a-912e-9448b901a08b",
+      "name": "Search in AA VENDIDO2",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "20406a30-5a5f-49ad-ba2f-7b87a25e3ac2",
+              "leftValue": "={{ !!$json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1504,
+        832
+      ],
+      "id": "c11e1985-82fd-4629-9418-10b74f58f1ed",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$node[\"LIMPIEZA DE NOMBRE1\"].json[\"tercera_busqueda\"]}}",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1680,
+        912
+      ],
+      "id": "b6960072-f64b-4c38-9774-4fb609a60327",
+      "name": "Search in AA VENDIDO3",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d65c6c87-34fd-46e5-9759-5e4b87d9006a",
+              "leftValue": "={{ !!$json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1792,
+        912
+      ],
+      "id": "b4920389-c281-4a54-a4ed-a99f42c15e9a",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$node[\"LIMPIEZA DE NOMBRE1\"].json[\"cuarta_busqueda\"]}}",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1968,
+        992
+      ],
+      "id": "8a998798-73de-473e-bba5-43547db954e8",
+      "name": "Search in AA VENDIDO4",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2240,
+        736
+      ],
+      "id": "0c97e555-9a49-4d98-863b-513e3fb3a9e8",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d65c6c87-34fd-46e5-9759-5e4b87d9006a",
+              "leftValue": "={{ !!$json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2080,
+        992
+      ],
+      "id": "c00e6499-7269-4f6e-9e96-cf2d21298720",
+      "name": "If6"
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{$json.id}}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1vVKq2toDqf_TBLenokezjQXMR5yxkpgz",
+          "mode": "list",
+          "cachedResultName": "AA DEVOLUCIONES",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1vVKq2toDqf_TBLenokezjQXMR5yxkpgz"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2464,
+        656
+      ],
+      "id": "1f50c633-3c25-4578-8661-2397632a3907",
+      "name": "Mover a AA DEVOLUCIONES",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot{{TELEGRAM_BOT_TOKEN}}/sendMessage?chat_id={{TELEGRAM_CHAT_ID}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        368,
+        912
+      ],
+      "id": "e453cc99-e36e-4b4f-af30-bb2d9c2e32b0",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot{{TELEGRAM_BOT_TOKEN}}/sendMessage?chat_id={{TELEGRAM_CHAT_ID}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        416,
+        288
+      ],
+      "id": "454f88b0-c5d0-40ac-8c31-5780773724cf",
+      "name": "HTTP Request5"
+    },
+    {
+      "parameters": {
+        "url": "={{ \"https://api.mercadolibre.com/\" + $json.body.resource.replace(/^\\//, \"\") }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        64,
+        288
+      ],
+      "id": "d4afa0ab-f184-40a7-9ccf-9f5b81c475cd",
+      "name": "HTTP Request4",
+      "credentials": {
+        "oAuth2Api": {
+          "id": "RGGOytt72lCMBR0x",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4cb8d987-5f47-43c2-a129-85eea6491b4f",
+              "name": "nombre_producto",
+              "value": "={{$json.order_items[0].item.title}}",
+              "type": "string"
+            },
+            {
+              "id": "dc528f1f-2e58-443e-a571-13599596fa74",
+              "name": "order_id",
+              "value": "={{$json.id}}",
+              "type": "string"
+            },
+            {
+              "id": "f1887a3a-1639-4393-a6ab-8f5975579426",
+              "name": "precio",
+              "value": "={{$json.total_amount}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        288
+      ],
+      "id": "576101d5-c241-4fdc-b319-7816e2fa33c2",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mercadolibre-ventas",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -512,
+        304
+      ],
+      "id": "392e75e7-ce48-4f5a-a84b-9614ba613a8e",
+      "name": "ML - CENTRAL",
+      "webhookId": "47f65edd-6f8f-443c-a53c-459d214533fb"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "7a9c34bf-2977-4a50-98f3-9b0bb19dfcaa",
+              "leftValue": "={{ $json.body.resource || \"\" }}",
+              "rightValue": "/orders_v2/",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "2233094e-b728-4ccf-98f2-1d2ccbefe1f3",
+              "leftValue": "={{ $json.body.resource || \"\" }}",
+              "rightValue": "/orders/",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -224,
+        304
+      ],
+      "id": "a6f2ab5c-d734-401b-b31c-45912b2abf60",
+      "name": "VENTA"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "15cf69e2-7724-4483-b9aa-56ff83993b8d",
+              "leftValue": "={{ $json.body.resource || \"\" }}",
+              "rightValue": "/returns/",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -224,
+        496
+      ],
+      "id": "e8fdb3fa-6b4b-45ed-993c-b0c5babe869a",
+      "name": "DEVOLUCION"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "15cf69e2-7724-4483-b9aa-56ff83993b8d",
+              "leftValue": "={{ $json.body.topic || $json.body.resource || \"\" }}",
+              "rightValue": "/claims/",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -240,
+        928
+      ],
+      "id": "9b896ee2-b03b-4554-b1ec-71b66bf5b5eb",
+      "name": "RECLAMO"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$json.nombre_busqueda}}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "172o7DOt759PFzWETSYbhm5EQODBX8Y9Z",
+            "mode": "list",
+            "cachedResultName": "AA ROPA",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/172o7DOt759PFzWETSYbhm5EQODBX8Y9Z"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2016,
+        208
+      ],
+      "id": "a2a0cef1-f89a-4dd1-99f9-22089629fdfc",
+      "name": "Search in AA ROPA",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "08650b3d-8192-4e63-811d-f1bc8e700ae9",
+              "leftValue": "={{$json.id}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2144,
+        208
+      ],
+      "id": "f5e62fae-b494-4fd2-95a9-505df4aa2d7b",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "08650b3d-8192-4e63-811d-f1bc8e700ae9",
+              "leftValue": "={{$json.id}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2448,
+        304
+      ],
+      "id": "9d629591-1788-4f41-82d1-9f595a00f338",
+      "name": "If8"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$json.nombre_busqueda}}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1utQQZ2rQuSph_y6Vd-Bi6r253VKYMneN",
+            "mode": "list",
+            "cachedResultName": "AA CALZADO",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1utQQZ2rQuSph_y6Vd-Bi6r253VKYMneN"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2320,
+        304
+      ],
+      "id": "00c03de3-3e9d-4db3-a461-6ee0e3928b48",
+      "name": "Search in AA CALZADO",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "08650b3d-8192-4e63-811d-f1bc8e700ae9",
+              "leftValue": "={{$json.id}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2752,
+        416
+      ],
+      "id": "26822a06-624d-47dd-a0a5-5ce2796a12de",
+      "name": "If9"
+    },
+    {
+      "parameters": {
+        "numberInputs": 5
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3200,
+        0
+      ],
+      "id": "19c11570-f8b8-4b61-ba8c-78586f86b3c5",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=mimeType = 'application/vnd.google-apps.folder'",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "172o7DOt759PFzWETSYbhm5EQODBX8Y9Z",
+            "mode": "list",
+            "cachedResultName": "AA ROPA",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/172o7DOt759PFzWETSYbhm5EQODBX8Y9Z"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3104,
+        608
+      ],
+      "id": "24c0f9c9-0eed-408b-bce2-aaf432ccc5b0",
+      "name": "Search in AA ROPA1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$json.nombre_busqueda}}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "19-gYTWSVtHaWgtw-l09Lph7EaKogCfDb",
+            "mode": "list",
+            "cachedResultName": "AB LIBROS",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/19-gYTWSVtHaWgtw-l09Lph7EaKogCfDb"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2624,
+        416
+      ],
+      "id": "506d1e35-f365-4070-b7ad-cf2f509092a3",
+      "name": "Search in AB LIBROS",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=mimeType = 'application/vnd.google-apps.folder'",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1utQQZ2rQuSph_y6Vd-Bi6r253VKYMneN",
+            "mode": "list",
+            "cachedResultName": "AA CALZADO",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1utQQZ2rQuSph_y6Vd-Bi6r253VKYMneN"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3104,
+        768
+      ],
+      "id": "3f5d0011-b445-4e98-b27a-113596ec910e",
+      "name": "Search in AA CALZADO1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=mimeType = 'application/vnd.google-apps.folder'",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "19-gYTWSVtHaWgtw-l09Lph7EaKogCfDb",
+            "mode": "list",
+            "cachedResultName": "AB LIBROS",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/19-gYTWSVtHaWgtw-l09Lph7EaKogCfDb"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3104,
+        928
+      ],
+      "id": "5a212964-ce38-40e0-9de2-f8ba7c108203",
+      "name": "Search in AB LIBROS1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a6faac5a-1f70-43a1-a666-3d7bf463dccf",
+              "name": "=nombre_producto",
+              "value": "=motivo",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        80,
+        912
+      ],
+      "id": "ac9757d8-4d4a-4c92-b755-011366be63f2",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Producto vendido:\n{{ $json.producto }}\n\nProducto limpio:\n{{ $json.productoLimpio }}\n\nCarpetas disponibles en SOLO ML:\n{{ JSON.stringify($json.carpetas) }}\n\nElegí la carpeta que mejor coincida.\n\nRegla:\n{{ $json.productoLimpio }} Debe coincidir al menos 3 palabras con una de las carpetas que se encuentre en SOLO ML\nIgnorar talle, original, nuevo, usado, color si solo aparece en uno.\n\nRespondé SOLO JSON:\n\n{\n  \"id\": \"ID_DE_CARPETA\",\n  \"name\": \"NOMBRE_CARPETA\",\n  \"confidence\": \"alta\"\n}\n\nSi ninguna coincide al menos 3 palabras importantes:\n\n{\n  \"id\": \"NO_MATCH\"\n}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2560,
+        -336
+      ],
+      "id": "4a6c5953-0abf-48c1-8a7f-55eb10e5ba76",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2544,
+        -480
+      ],
+      "id": "700d84c6-1234-4ec2-85f8-98e697168464",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AF7GhBJjh3RKYZIf",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.output || $json.text || $json.response || \"\";\n\nlet limpio = raw\n  .replace(/```json/g, \"\")\n  .replace(/```/g, \"\")\n  .trim();\n\nconst match = limpio.match(/\\{[\\s\\S]*\\}/);\n\nif (!match) {\n  return [{\n    json: {\n      id: \"NO_MATCH\",\n      name: \"\",\n      confidence: \"\",\n      error: \"La IA no devolvió JSON válido\",\n      raw\n    }\n  }];\n}\n\nlet data;\n\ntry {\n  data = JSON.parse(match[0]);\n} catch (e) {\n  return [{\n    json: {\n      id: \"NO_MATCH\",\n      name: \"\",\n      confidence: \"\",\n      error: \"No se pudo parsear JSON\",\n      raw\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    id: data.id || \"NO_MATCH\",\n    name: data.name || \"\",\n    confidence: data.confidence || \"\",\n    fuente: \"IA\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2928,
+        -336
+      ],
+      "id": "490bedd9-b0e7-4991-870b-de862ca0e572",
+      "name": "Parsear respuesta IA"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "62dcc48f-1a0b-4250-97df-95f07d733cb8",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "NO_MATCH",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3120,
+        -336
+      ],
+      "id": "12cafb46-db26-4f01-9a04-78a0f00c2be6",
+      "name": "If10"
+    },
+    {
+      "parameters": {
+        "jsCode": "const producto = $('Edit Fields').first().json.nombre_producto;\nconst productoLimpio = $('LIMPIEZA DE NOMBRE').first().json.nombre_busqueda;\n\nconst carpetas = $input.all().map(item => ({\n  id: item.json.id,\n  name: item.json.name\n}));\n\nreturn [{\n  json: {\n    producto,\n    productoLimpio,\n    carpetas\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2320,
+        -336
+      ],
+      "id": "93abd00f-4f86-4217-9707-a1f1bb5c28ca",
+      "name": "Juntar Carpetas"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=mimeType = 'application/vnd.google-apps.folder'",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "17tMhNWMjQz0f-5QrG8LaFcfvMESvhPRk",
+            "mode": "list",
+            "cachedResultName": "SOLO ML",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/17tMhNWMjQz0f-5QrG8LaFcfvMESvhPRk"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2048,
+        -256
+      ],
+      "id": "01a16aaa-25c5-47f8-953c-75f524b63733",
+      "name": "Search in AMBOS2",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcpt1Sns35DlqLUX",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "62dcc48f-1a0b-4250-97df-95f07d733cb8",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "NO_MATCH",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        4208,
+        128
+      ],
+      "id": "17fc8803-dc44-45c9-a78d-a40bb9f603d2",
+      "name": "If11"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Producto vendido:\n{{ $json.producto }}\n\nProducto limpio:\n{{ $json.productoLimpio }}\n\nCarpetas disponibles:\n{{ JSON.stringify($json.carpetas) }}\n\nTu tarea es elegir la carpeta correcta.\n\nReglas:\n\n1. Debe coincidir al menos 3 palabras importantes del producto limpio con una carpeta.\n\n2. Ignorar:\ntalle, original, nuevo, usada, usado, medidas, XS, S, M, L, XL, números.\n\n3. El tipo de producto debe coincidir.\nCalza ≠ Remera\nBuzo ≠ Jean\nZapatillas ≠ Campera\n\n4. Si hay varias coincidencias, elegir la más específica.\n\n5. Si ninguna coincide claramente, responder NO_MATCH.\n\nRespondé SOLO JSON válido:\n\nSi encontrás:\n\n{\n  \"id\": \"ID_DE_CARPETA\",\n  \"name\": \"NOMBRE_CARPETA\",\n  \"confidence\": \"alta\"\n}\n\nSi no encontrás:\n\n{\n  \"id\": \"NO_MATCH\"\n}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        3744,
+        464
+      ],
+      "id": "56abcbde-8268-4c78-a2a9-6615bc237d47",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.output || $json.text || $json.response || \"\";\n\nlet limpio = raw\n  .replace(/```json/g, \"\")\n  .replace(/```/g, \"\")\n  .trim();\n\nconst match = limpio.match(/\\{[\\s\\S]*\\}/);\n\nif (!match) {\n  return [{\n    json: {\n      id: \"NO_MATCH\",\n      name: \"\",\n      confidence: \"\",\n      error: \"La IA no devolvió JSON válido\",\n      raw\n    }\n  }];\n}\n\nlet data;\n\ntry {\n  data = JSON.parse(match[0]);\n} catch (e) {\n  return [{\n    json: {\n      id: \"NO_MATCH\",\n      name: \"\",\n      confidence: \"\",\n      error: \"No se pudo parsear JSON\",\n      raw\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    id: data.id || \"NO_MATCH\",\n    name: data.name || \"\",\n    confidence: data.confidence || \"\",\n    fuente: \"IA\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4032,
+        320
+      ],
+      "id": "d0052875-0a27-45d6-a5b2-246bf92b040d",
+      "name": "Parsear respuesta IA1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3744,
+        656
+      ],
+      "id": "16dfcbba-80f5-43cd-bd87-4ba2d37fd714",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AF7GhBJjh3RKYZIf",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const producto = $('Edit Fields').first().json.nombre_producto;\nconst productoLimpio = $('LIMPIEZA DE NOMBRE').first().json.nombre_busqueda;\n\nconst carpetas = $input.all().map(item => ({\n  id: item.json.id,\n  name: item.json.name\n}));\n\nreturn [{\n  json: {\n    producto,\n    productoLimpio,\n    carpetas\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3552,
+        576
+      ],
+      "id": "fc0ab4db-6922-4f8d-9d13-1ccf68fcfe1c",
+      "name": "Juntar Carpetas1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a6faac5a-1f70-43a1-a666-3d7bf463dccf",
+              "name": "=question_id",
+              "value": "={{ $json.body.resource.replace('/questions/','') }}",
+              "type": "string"
+            },
+            {
+              "id": "39d7ab72-0382-4688-be9d-1fa5502163b7",
+              "name": "=resource",
+              "value": "={{ $json.body.resource }}",
+              "type": "string"
+            },
+            {
+              "id": "96d87d7c-c9a7-4db8-b642-8af246487be0",
+              "name": "=url_question",
+              "value": "={{ 'https://api.mercadolibre.com' + $json.body.resource }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        80,
+        1312
+      ],
+      "id": "ab72c746-9f5f-4415-8118-e8244820d904",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot{{TELEGRAM_BOT_TOKEN}}/sendMessage?chat_id={{TELEGRAM_CHAT_ID}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        368,
+        1312
+      ],
+      "id": "a1da99e5-8552-4514-ac00-bf7eb4adfea6",
+      "name": "HTTP Request6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "15cf69e2-7724-4483-b9aa-56ff83993b8d",
+              "leftValue": "={{ $json.body.topic || \"\" }}",
+              "rightValue": "questions",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -240,
+        1328
+      ],
+      "id": "1340e530-c5d4-4cc7-9b4b-bf7ea0e597e4",
+      "name": "PREGUNTAS"
+    },
+    {
+      "parameters": {
+        "content": "PRUEBA DE BUSQUEDA INDICADA EFECTIVA",
+        "width": 1152
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2048,
+        -688
+      ],
+      "typeVersion": 1,
+      "id": "834c842d-39c4-46af-80f3-2f89056b7a64",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\n\ndata.ventas = (data.ventas || 0) + 1;\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        16
+      ],
+      "id": "113008ba-eae5-4327-9132-dad614d45b33",
+      "name": "Estadisticas Ventas"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\n\ndata.devoluciones = (data.devoluciones || 0) + 1;\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        480
+      ],
+      "id": "1ec8d2bc-05f3-4bfd-a17b-817a1b368b68",
+      "name": "Estadisticas Devoluciones"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\n\ndata.reclamos = (data.reclamos || 0) + 1;\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        1072
+      ],
+      "id": "5b6d2b5a-6116-498b-9d0b-13373280276f",
+      "name": "Estadisticas Reclamos"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\n\ndata.preguntas = (data.preguntas || 0) + 1;\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        1472
+      ],
+      "id": "3cec455f-480f-4c4d-b985-8607d705980b",
+      "name": "Estadistica Preguntas"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                5
+              ],
+              "triggerAtHour": 21
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -288,
+        1792
+      ],
+      "id": "4837c5eb-2e7c-4091-bd98-b2802e36e0b1",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\n\nconst ventas = data.ventas || 0;\nconst preguntas = data.preguntas || 0;\nconst reclamos = data.reclamos || 0;\nconst devoluciones = data.devoluciones || 0;\n\ndata.ventas = 0;\ndata.preguntas = 0;\ndata.reclamos = 0;\ndata.devoluciones = 0;\n\nreturn [{\n  json: {\n    ventas,\n    preguntas,\n    reclamos,\n    devoluciones\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -64,
+        1792
+      ],
+      "id": "b2471177-91d0-486b-8c32-603a9ebac825",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot{{TELEGRAM_BOT_TOKEN}}/sendMessage?chat_id={{TELEGRAM_CHAT_ID}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        160,
+        1792
+      ],
+      "id": "35fdaf81-52f3-4f9b-bb69-14d80a34ace9",
+      "name": "HTTP Request7"
+    },
+    {
+      "parameters": {
+        "content": "NOTIFICACION DE TELEGRAM CON ESTADISTICA SEMANAL UN VIERNES 9PM",
+        "height": 80,
+        "width": 560
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        1680
+      ],
+      "typeVersion": 1,
+      "id": "9a54d6d5-624b-4671-bd17-24f7dbefcfa8",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "+1 VENTA (ESTADISTICA)",
+        "height": 80,
+        "width": 198
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        32,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "4ae1a899-de74-4812-9344-153611ac004e",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "CUANDO HAY RECLAMO O PREGUNTA LLEGA NOTIFICACION DE TELEGRAM CON ASUNTO Y PRODUCTO\nTambien suman estadistica"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        608,
+        1104
+      ],
+      "typeVersion": 1,
+      "id": "89386130-1db0-43a3-b58a-f7413ee3c0f9",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "Cuando no encuentra en vendido el producto devuelto hace una especie de \"for\" en la que en cada buqueda le quita una palabra al titulo hasta encontrar la coincidencia y posteriormente pasarlo a devoluciones y sacarle el (VENDIDO)",
+        "height": 80,
+        "width": 1024
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1184,
+        560
+      ],
+      "typeVersion": 1,
+      "id": "86badbe9-48f0-4d8b-9d85-601a2e3e5adb",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "Juntamos todas las carpetas posibles donde se pueda a llegar a encontrar el producto publicado. Luego aplicamos un codigo para juntarlas y que la IA busque la que mas coincide. ",
+        "height": 80,
+        "width": 656
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3312,
+        896
+      ],
+      "typeVersion": 1,
+      "id": "4ecfd9e9-2e94-4ee9-ad79-e903ccab9733",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "content": "Pasamos la respuesta de la IA a JSON para moverlo a AA VENDIDO y agregarle (VENDIDO) al producto",
+        "height": 80,
+        "width": 384
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4192,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "f8824d4f-7a8f-4665-8183-3efae54dd554",
+      "name": "Sticky Note12"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "LIMPIEZA DE NOMBRE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Search in AMBOS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Search in AA ROPA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Juntar Carpetas1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "LIMPIEZA DE NOMBRE1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LIMPIEZA DE NOMBRE": {
+      "main": [
+        [
+          {
+            "node": "Search in SOLO ML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LIMPIEZA DE NOMBRE1": {
+      "main": [
+        [
+          {
+            "node": "Search in AA VENDIDO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in SOLO ML": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mover a AA VENDIDO": {
+      "main": [
+        [
+          {
+            "node": "Agregar (VENDIDO)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AMBOS": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in SOLO ML1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AMBOS1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Search in AA VENDIDO": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Mover a AA DEVOLUCIONES",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Search in AA VENDIDO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AA VENDIDO1": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Search in AA VENDIDO2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AA VENDIDO2": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Search in AA VENDIDO3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AA VENDIDO3": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 2
+          }
+        ],
+        [
+          {
+            "node": "Search in AA VENDIDO4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AA VENDIDO4": {
+      "main": [
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Mover a AA DEVOLUCIONES",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Mover a AA DEVOLUCIONES": {
+      "main": [
+        [
+          {
+            "node": "Sacar (VENDIDO)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ML - CENTRAL": {
+      "main": [
+        [
+          {
+            "node": "VENTA",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "DEVOLUCION",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RECLAMO",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "PREGUNTAS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VENTA": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Estadisticas Ventas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DEVOLUCION": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Estadisticas Devoluciones",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RECLAMO": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Estadisticas Reclamos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AA ROPA": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 2
+          }
+        ],
+        [
+          {
+            "node": "Search in AA CALZADO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 3
+          }
+        ],
+        [
+          {
+            "node": "Search in AB LIBROS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AA CALZADO": {
+      "main": [
+        [
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If9": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 4
+          }
+        ],
+        [
+          {
+            "node": "Search in AMBOS1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Search in SOLO ML1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Search in AA ROPA1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Search in AA CALZADO1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Search in AB LIBROS1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Mover a AA VENDIDO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AB LIBROS": {
+      "main": [
+        [
+          {
+            "node": "If9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AA ROPA1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Search in AA CALZADO1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Search in AB LIBROS1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Parsear respuesta IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear respuesta IA": {
+      "main": [
+        [
+          {
+            "node": "If10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If10": {
+      "main": [
+        []
+      ]
+    },
+    "Juntar Carpetas": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in AMBOS2": {
+      "main": [
+        [
+          {
+            "node": "Juntar Carpetas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Parsear respuesta IA1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear respuesta IA1": {
+      "main": [
+        [
+          {
+            "node": "If11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If11": {
+      "main": [
+        [
+          {
+            "node": "Mover a AA VENDIDO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Juntar Carpetas1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PREGUNTAS": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Estadistica Preguntas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ce660583-060b-45c0-a6d6-3e72b096ad73",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "12aa9f1bf8a6a0c930ae24c2f8ba5fd83b75b6d95b2c1b55b251783cfd2f1a38"
+  },
+  "id": "lHjdIaXVb6aBxATe",
+  "tags": []
+}
